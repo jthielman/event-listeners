@@ -38,28 +38,52 @@ const pies = [
   ];
 
   const printToDom = (toPrint, divId) => {
-      document.getElementById(divId).innerHTML += toPrint
+      document.getElementById(divId).innerHTML = toPrint
   }
 
   const pieBuilder = (piesArray) => {
+      let domString = '';
     for (let i = 0; i < piesArray.length; i++) {
         const pie = piesArray[i]
-        const domString = `
+        domString += `
         <div class="card">
             <h2>${pie.name}</h2>
             <img src=${pie.imageUrl} alt='Image of ${pie.name}' />
         </div>
         `
-        printToDom(domString, 'pie-zone')
     }
+    printToDom(domString, 'pie-zone')
   }
 
-  document.getElementById('my-button').addEventListener('click', pieBuilder)
-  document.getElementById('my-button').addEventListener('click', () => {
-      pieBuilder(pies)})
+//   document.getElementById('my-button').addEventListener('click', pieBuilder)
+//   document.getElementById('my-button').addEventListener('click', () => {
+//       pieBuilder(pies)})
 
-  document.getElementById('my-button').addEventListener('click', () => {
-      console.log('🐁');
-  })
+//   document.getElementById('my-button').addEventListener('click', () => {
+//       console.log('🐁');
+//   })
 
-  pieBuilder(pies)
+const showFaves = (e) => {
+    // figure out WHO the instructor is for the button we clicked on
+    const instructor = e.target.id;
+    // only get those pies from the list of all the pies
+    const selectedPies = [];
+    for (let i = 0; i < pies.length; i++) {
+        const pie = pies[i];
+        if (pie.instructor === instructor) {
+            selectedPies.push(pie)
+        }
+    }
+    // pass smaller list of pies back into pieBuilder
+    pieBuilder(selectedPies);
+}
+
+document.getElementById('zoeee').addEventListener('click', showFaves);
+document.getElementById('greg').addEventListener('click', showFaves);
+document.getElementById('callan').addEventListener('click', showFaves);
+document.getElementById('michael').addEventListener('click', showFaves);
+
+document.getElementById('all').addEventListener('click', () => {
+    pieBuilder(pies)});
+
+    pieBuilder(pies);
